@@ -40,7 +40,7 @@ $$ \text{Model}(x) = \text{L}_2(\text{L}_1(x)) $$
 $$ \text{D2}_{(10 \times 1)} = \text{Model}(x) - Y $$
 
 ### Gradient with Respect to Weights of Layer 2:
-$$ dW^{(2)}_{(10 \times 10)} = \frac{1}{m} \cdot \text{D2}_{(10 \times 1)} \cdot \text{Model}(x)^T_{(1 \times 10)} $$
+$$ dW^{(2)}_{(10 \times 10)} = \frac{1}{m} \cdot \text{D2}_{(10 \times 1)} \cdot \text{L1}^T_{(1 \times 10)} $$
 
 ### Gradient with Respect to Bias of Layer 2:
 $$ db^{(2)}_{(10 \times 1)} = \frac{1}{m} \cdot \sum \text{D2} $$
@@ -53,6 +53,10 @@ $$ dW^{(1)}_{(10 \times 784)} = \frac{1}{m} \cdot \text{CL1}_{(10 \times 1)} \cd
 
 ### Gradient with Respect to Bias of Layer 1:
 $$ db^{(1)}_{(10 \times 1)} = \frac{1}{m} \cdot \sum \text{CL1} $$
+
+## Output variables
+$$ W^{(1)} = W^{(1)} - \alpha \cdot dW^{(1)}$$
+$$ b^{(1)} = b^{(1)} - \alpha \cdot db^{(1)}$$
 
 ## Summary of Variables:
 - **$W^{(1)}$**: Weight matrix for the first layer (32x784).
