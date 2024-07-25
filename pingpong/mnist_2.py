@@ -10,7 +10,7 @@ import tensorflow as tf
 
 # ON_ma.shape = (784, 60000)
 
-train_images = train_images.reshape(60000, 784).T.astype('float3t2') / 255
+train_images = train_images.reshape(60000, 784).T.astype('float32') / 255
 
 def init_parameters():
     W1 = np.random.randn(32, 784)
@@ -33,6 +33,9 @@ def softmax(x):
 
 def forward_propagation(W1, b1, W2, b2, X):
     L1u = W1.dot(X)+b1
+    print(W1.shape, " ", X.shape, " ", b1.shape)
+    # (32, 784)   (784, 2000)   (32, 1)
+    
 
     # (32x784) @ (6000, 28, 28)
     # (32x784) @ (784, 60000)
