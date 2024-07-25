@@ -8,11 +8,11 @@ import numpy as np
 tf.experimental.numpy.experimental_enable_numpy_behavior()
 
 
+
 (train_images, train_labels), (test_images, test_labels) = tf.keras.datasets.mnist.load_data()
 
 train_images = tf.reshape(train_images, (60000, 28, 28, 1)).astype('float32') / 255
 test_images = tf.reshape(test_images, (10000, 28, 28, 1)).astype('float32') / 255
-
 
 def one_layer_model(n, act_type):
     model = models.Sequential()
@@ -72,56 +72,55 @@ def one_conv_model(n):
     
     return test_acc
 
-if __name__ == "__main__":
-    one_layer_input = np.array([4, 6, 8, 10, 16, 32, 64, 128, 256, 512])
-    one_layer_acc_relu = np.empty(shape=(one_layer_input.size, 3))
-    one_layer_acc_softmax = np.empty(shape=(one_layer_input.size, 3))
+one_layer_input = np.array([4, 6, 8, 10, 16, 32, 64, 128, 256, 512])
+one_layer_acc_relu = np.empty(shape=(one_layer_input.size, 3))
+one_layer_acc_softmax = np.empty(shape=(one_layer_input.size, 3))
 
-    for idx, i in enumerate(one_layer_input):
-        for j in range(3):
-            one_layer_acc_relu[idx][j] = one_layer_model(i, 'relu')
+for idx, i in enumerate(one_layer_input):
+    for j in range(3):
+        one_layer_acc_relu[idx][j] = one_layer_model(i, 'relu')
 
-    for idx, i in enumerate(one_layer_input):
-        for j in range(3):
-            one_layer_acc_softmax[idx][j] = one_layer_model(i, 'softmax')
+for idx, i in enumerate(one_layer_input):
+    for j in range(3):
+        one_layer_acc_softmax[idx][j] = one_layer_model(i, 'softmax')
 
-    fig = plt.figure()
+fig = plt.figure()
 
-    y1 = np.mean(one_layer_acc_relu, axis=1)
-    y2 = np.mean(one_layer_acc_softmax, axis=1)
+y1 = np.mean(one_layer_acc_relu, axis=1)
+y2 = np.mean(one_layer_acc_softmax, axis=1)
 
-    yerr1_lower = np.abs(y1 - np.min(one_layer_acc_relu, axis=1))
-    yerr1_higher = np.abs(y1 - np.min(one_layer_acc_relu, axis=1))
-    yerr1 = np.array([yerr1_lower, yerr1_higher])
+yerr1_lower = np.abs(y1 - np.min(one_layer_acc_relu, axis=1))
+yerr1_higher = np.abs(y1 - np.min(one_layer_acc_relu, axis=1))
+yerr1 = np.array([yerr1_lower, yerr1_higher])
 
-    yerr2_lower = np.abs(y2 - np.min(one_layer_acc_softmax, axis=1))
-    yerr2_higher = np.abs(y2 - np.min(one_layer_acc_softmax, axis=1))
-    yerr2 = np.array([yerr2_lower, yerr2_higher])
-
-
-    plt.errorbar(one_layer_input, y1, yerr=yerr1, fmt='o-', label='ReLU')
-    plt.errorbar(one_layer_input, y2, yerr=yerr2, fmt='o-', label='Softmax')
-
-    plt.xlabel('Input Size')
-    plt.ylabel('Accuracy')
-    plt.title('One Layer Model: ReLU vs Softmax')
-    plt.grid()
-    plt.legend()
-
-    fig.savefig("one_layer_acc_relu.png")
-    plt.show()
+yerr2_lower = np.abs(y2 - np.min(one_layer_acc_softmax, axis=1))
+yerr2_higher = np.abs(y2 - np.min(one_layer_acc_softmax, axis=1))
+yerr2 = np.array([yerr2_lower, yerr2_higher])
 
 
-    # Flatten the 2D arrays
-    relu_flat = one_layer_acc_relu.flatten()
-    softmax_flat = one_layer_acc_softmax.flatten()
+plt.errorbar(one_layer_input, y1, yerr=yerr1, fmt='o-', label='ReLU')
+plt.errorbar(one_layer_input, y2, yerr=yerr2, fmt='o-', label='Softmax')
 
-    # Create the savedata array
-    savedata = np.column_stack((np.repeat(one_layer_input, 3), relu_flat, softmax_flat))
+plt.xlabel('Input Size')
+plt.ylabel('Accuracy')
+plt.title('One Layer Model: ReLU vs Softmax')
+plt.grid()
+plt.legend()
 
-    # Create a header that matches the number of columns
-    header = 'neuron_number,relu,softmax'
+fig.savefig("one_layer_acc_relu.png")
+plt.show()
 
-    # Save to CSV
-    np.savetxt('output.csv', savedata, delimiter=',', header=header, comments='')
+
+# Flatten the 2D arrays
+relu_flat = one_layer_acc_relu.flatten()
+softmax_flat = one_layer_acc_softmax.flatten()
+
+# Create the savedata array
+savedata = np.column_stack((np.repeat(one_layer_input, 3), relu_flat, softmax_flat))
+
+# Create a header that matches the number of columns
+header = 'neuron_number,relu,softmax'
+
+# Save to CSV
+np.savetxt('output.csv', savedata, delimiter=',', header=header, comments='')
 
