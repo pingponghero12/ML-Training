@@ -4,17 +4,15 @@ from scipy.interpolate import griddata
 from mnist_3 import two_layer_model
 
 # Assuming you have your data in this format
-layer1_input = np.array([8, 16, 32, 64, 128, 256])
-layer2_input = np.array([8, 16, 32, 64, 128, 256])
+layer1_input = np.array([4, 6, 8, 10, 12, 14, 16, 20, 24, 32])
+layer2_input = np.array([4, 6, 8, 10, 12, 14, 16, 20, 24, 32])
 
 
 accuracies = np.empty(shape=(layer1_input.size, layer2_input.size))
 
-print("DUPPPPPAAAAA")
-
 for inx1, i1 in enumerate(layer1_input):
     for inx2, i2 in enumerate(layer2_input):
-        print("DUPA: ", i1, i2, "\n\n")
+        print("Iteration for: ", i1, i2, "\n\n")
         accuracies[inx1][inx2] = two_layer_model(i1, i2, 'relu')
 
 # Create a meshgrid for interpolation

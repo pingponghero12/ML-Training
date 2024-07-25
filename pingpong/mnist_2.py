@@ -6,7 +6,11 @@ import tensorflow as tf
 
 (train_images, train_labels), (test_images, test_labels) = tf.keras.datasets.mnist.load_data()
 
-train_images = train_images.reshape(60000, 784).T.astype('float32') / 255
+# train_images.shape = (60000, 28, 28)
+
+# ON_ma.shape = (784, 60000)
+
+train_images = train_images.reshape(60000, 784).T.astype('float3t2') / 255
 
 def init_parameters():
     W1 = np.random.randn(32, 784)
@@ -29,6 +33,10 @@ def softmax(x):
 
 def forward_propagation(W1, b1, W2, b2, X):
     L1u = W1.dot(X)+b1
+
+    # (32x784) @ (6000, 28, 28)
+    # (32x784) @ (784, 60000)
+
     L1 = ReLU(L1u)
 
     L2u = W2.dot(L1)+b2
