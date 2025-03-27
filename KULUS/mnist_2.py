@@ -64,7 +64,6 @@ def predict(A2):
     return np.argmax(A2,0)
 
 def acc(predict, Y):
-    
     return np.mean(predict == Y)
 
 
